@@ -1,4 +1,5 @@
 import os
+import socket
 import psycopg2
 from flask import Flask, request, jsonify
 
@@ -11,7 +12,12 @@ def get_db_connection():
     if not database_url:
         # No database configured; return None so callers can handle gracefully
         return None
-    return psycopg2.connect(database_url)
+    try:
+        # Add timeout to prevent hanging (5 seconds)
+        return psycopg2.connect(database_url, connect_timeout=5)
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        return None
 
 # Create the items table if it doesn't exist
 def init_db():
