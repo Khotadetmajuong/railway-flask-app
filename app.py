@@ -49,6 +49,14 @@ def home():
         <li>POST /items - Add a new item (use Postman or curl)</li>
     </ul>
     '''
+@app.route('/debug')
+def debug():
+    import os
+    db_url = os.environ.get('DATABASE_URL')
+    if db_url:
+        return f"DATABASE_URL exists (starts with: {db_url[:20]}...)"
+    else:
+        return "DATABASE_URL not found"
 
 @app.route('/health')
 def health():
