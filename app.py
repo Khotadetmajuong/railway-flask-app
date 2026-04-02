@@ -44,6 +44,11 @@ def home():
     </ul>
     '''
 
+@app.route('/health')
+def health():
+    return {"status": "healthy"}
+
+
 # GET all items
 @app.route('/items', methods=['GET'])
 def get_items():
