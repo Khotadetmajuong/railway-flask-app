@@ -9,16 +9,19 @@ sys.stderr.flush()
 app = Flask(__name__)
 
 def get_db_connection():
+    print("1. Inside get_db_connection function", file=sys.stderr)
     database_url = os.environ.get('DATABASE_URL')
+    print(f"2. DATABASE_URL is: {database_url is not None}", file=sys.stderr)
     if not database_url:
-        print('DATABASE_URL not set')
+        print('3. DATABASE_URL not set', file=sys.stderr)
         return None
     try:
+        print("4. Attempting to connect...", file=sys.stderr)
         conn = psycopg2.connect(database_url, connect_timeout=10)
-        print('Database connected successfully')
+        print('5. Database connected successfully', file=sys.stderr)
         return conn
     except Exception as e:
-        print(f'Database connection FAILED: {str(e)}')
+        print(f'6. Database connection FAILED: {str(e)}', file=sys.stderr)
         return None
 
 # Create the items table if it doesn't exist
