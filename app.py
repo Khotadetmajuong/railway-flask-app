@@ -60,7 +60,14 @@ def debug():
 
 @app.route('/health')
 def health():
-    return {"status": "healthy"}
+    conn = get_db_connection()
+    if conn:
+        db_status = "connected"
+        conn.close()
+    else:
+        db_status = "disconnected"
+    
+    return {"status": "healthy", "database": db_status}
 
 
 # GET all items
