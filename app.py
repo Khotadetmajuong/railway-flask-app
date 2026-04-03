@@ -2,6 +2,9 @@ import os
 import socket
 import psycopg2
 from flask import Flask, request, jsonify
+import sys
+print("=== APP STARTING ===", file=sys.stderr)
+sys.stderr.flush()
 
 app = Flask(__name__)
 
