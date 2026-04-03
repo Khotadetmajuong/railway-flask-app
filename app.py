@@ -5,18 +5,17 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# This function creates a connection to the database
 def get_db_connection():
-    # Railway automatically provides DATABASE_URL - we just use it
     database_url = os.environ.get('DATABASE_URL')
     if not database_url:
-        # No database configured; return None so callers can handle gracefully
+        print('DATABASE_URL not set')
         return None
     try:
-        # Add timeout to prevent hanging (5 seconds)
-        return psycopg2.connect(database_url, connect_timeout=5)
+        conn = psycopg2.connect(database_url, connect_timeout=10)
+        print('Database connected successfully')
+        return conn
     except Exception as e:
-        print(f"Database connection error: {e}")
+        print(f'Database connection FAILED: {str(e)}')
         return None
 
 # Create the items table if it doesn't exist
