@@ -138,6 +138,12 @@ def delete_item(item_id):
         return jsonify({'message': 'Item deleted successfully'})
     else:
         return jsonify({'error': 'Item not found'}), 404
+    
+
+# Initialize database when app starts
+with app.app_context():
+    init_db()
+    print("Database initialization attempted", file=sys.stderr)    
 
 # Run the app
 if __name__ == '__main__':
